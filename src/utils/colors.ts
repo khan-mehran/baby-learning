@@ -35,6 +35,33 @@ export const CLASS_COLORS = [
   '#DDA0DD',
 ];
 
+/** [gradient start, gradient end, 3D edge] */
+export type Candy = [string, string, string];
+
+export const CLASS_CANDY: Candy[] = [
+  ['#FF9A5C', '#FF4F79', '#C92F58'],
+  ['#3FE3A8', '#0FB9B1', '#0A8A84'],
+  ['#5CCBFA', '#2979FF', '#1A54C4'],
+  ['#FFD93D', '#FF9F1C', '#D07A00'],
+  ['#C98BFF', '#7B2FF7', '#4F1AB0'],
+  ['#FF8CC0', '#F72585', '#B5125E'],
+];
+
+export const SUBJECT_CANDY: Record<'english' | 'math' | 'urdu', Candy> = {
+  english: ['#5CCBFA', '#2979FF', '#1A54C4'],
+  math:    ['#FFD93D', '#FF9F1C', '#D07A00'],
+  urdu:    ['#3FE3A8', '#0FB9B1', '#0A8A84'],
+};
+
+export const GK_CANDY: Candy = ['#FF8CC0', '#F72585', '#B5125E'];
+
+export function candyStyle([from, to, edge]: Candy) {
+  return {
+    background: `linear-gradient(145deg, ${from}, ${to})`,
+    boxShadow: `0 8px 0 ${edge}, 0 18px 28px rgba(30, 10, 90, 0.3)`,
+  };
+}
+
 export function pastel(index: number): string {
   return PASTEL_COLORS[index % PASTEL_COLORS.length];
 }

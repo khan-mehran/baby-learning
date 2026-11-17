@@ -5,47 +5,22 @@ interface Props {
   item: LearningItem;
   onPress: (item: LearningItem) => void;
   isUrdu?: boolean;
+  /** Show the picture above the name (General Knowledge) instead of the letter alone. */
+  withPicture?: boolean;
 }
 
-export default function LetterGridItem({ item, onPress, isUrdu }: Props) {
+export default function LetterGridItem({ item, onPress, isUrdu, withPicture }: Props) {
   return (
     <motion.button
+      className={`tile${withPicture ? ' tile--picture' : ''}`}
       onClick={() => onPress(item)}
-      whileTap={{ scale: 0.85 }}
+      whileTap={{ scale: 0.88, y: 4, rotate: -3 }}
       whileHover={{ scale: 1.06, y: -3 }}
-      animate={{ scale: 1 }}
-      aria-label={`${item.character} for ${item.word}`}
-      style={{
-        backgroundColor: item.color,
-        border: 'none',
-        borderRadius: 16,
-        padding: '12px 6px',
-        cursor: 'pointer',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 4,
-        aspectRatio: '1 / 1',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
-        width: '100%',
-        minHeight: 80,
-        transition: 'box-shadow 0.15s ease',
-      }}
+      aria-label={item.say.char.text}
+      style={{ backgroundColor: item.color }}
     >
-      <span style={{
-        fontSize: 'clamp(18px, 4vw, 32px)',
-        fontWeight: 900,
-        color: '#2D3436',
-        lineHeight: 1.1,
-        fontFamily: isUrdu ? "'Noto Nastaliq Urdu', serif" : "'Baloo 2', sans-serif",
-        direction: isUrdu ? 'rtl' : 'ltr',
-      }}>
-        {item.character}
-      </span>
-      <span style={{ fontSize: 'clamp(14px, 2.5vw, 22px)', lineHeight: 1 }}>
-        {item.emoji}
-      </span>
+      {withPicture && <span className="tile__emoji">{item.emoji}</span>}
+      <span className={`tile__char${isUrdu ? ' is-urdu' : ''}`}>{item.character}</span>
     </motion.button>
   );
 }

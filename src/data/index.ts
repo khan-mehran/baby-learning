@@ -1,29 +1,13 @@
-import { ClassCurriculum } from '../types';
-import playgroupCurriculum from './playgroup';
-import nurseryCurriculum from './nursery';
-import kgCurriculum from './kg';
-import class1Curriculum from './class1';
-import class2Curriculum from './class2';
-import class3Curriculum from './class3';
+import { Topic } from '../types';
+import english from './english';
+import math from './math';
+import urdu from './urdu';
+import { GK_TOPICS } from './gk';
 
-export const ALL_CURRICULA: ClassCurriculum[] = [
-  playgroupCurriculum,
-  nurseryCurriculum,
-  kgCurriculum,
-  class1Curriculum,
-  class2Curriculum,
-  class3Curriculum,
-];
+export { GK_TOPICS };
 
-export function getCurriculum(classId: string): ClassCurriculum | undefined {
-  return ALL_CURRICULA.find((c) => c.classId === classId);
+const ALL_TOPICS: Topic[] = [english, math, urdu, ...GK_TOPICS];
+
+export function getTopic(id: string): Topic | undefined {
+  return ALL_TOPICS.find((t) => t.id === id);
 }
-
-export {
-  playgroupCurriculum,
-  nurseryCurriculum,
-  kgCurriculum,
-  class1Curriculum,
-  class2Curriculum,
-  class3Curriculum,
-};

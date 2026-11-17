@@ -1,69 +1,37 @@
 import { motion } from 'framer-motion';
-import { THEME } from '../utils/colors';
 
-type Tab = 'grid' | 'flashcard';
+export type Tab = 'grid' | 'flashcard';
 
 interface Props {
   activeTab: Tab;
+  labels: [string, string];
   onTabChange: (tab: Tab) => void;
 }
 
-const TABS: { tab: Tab; label: string }[] = [
-  { tab: 'grid',      label: '📚  All' },
-  { tab: 'flashcard', label: '▶️  Learn One' },
-];
+const ORDER: Tab[] = ['grid', 'flashcard'];
 
-export default function NavTabs({ activeTab, onTabChange }: Props) {
+export default function NavTabs({ activeTab, labels, onTabChange }: Props) {
   return (
-    <div style={{
-      display: 'flex',
-      backgroundColor: '#fff',
-      borderRadius: 14,
-      padding: 4,
-      gap: 4,
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-      position: 'relative',
-    }}>
-      {TABS.map(({ tab, label }) => {
+    <div className="tabs" role="tablist">
+      {ORDER.map((tab, i) => {
         const isActive = tab === activeTab;
         return (
-          <motion.button
+          <button
             key={tab}
+            role="tab"
+            aria-selected={isActive}
+            className={`tabs__btn${isActive ? ' is-active' : ''}`}
             onClick={() => onTabChange(tab)}
-            whileTap={{ scale: 0.95 }}
-            aria-label={label}
-            style={{
-              flex: 1,
-              padding: '11px 20px',
-              borderRadius: 10,
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: 15,
-              fontWeight: 600,
-              fontFamily: "'Baloo 2', sans-serif",
-              position: 'relative',
-              backgroundColor: isActive ? `${THEME.primary}18` : 'transparent',
-              color: isActive ? THEME.primary : THEME.textLight,
-              transition: 'all 0.2s ease',
-            }}
           >
-            {label}
             {isActive && (
-              <motion.div
-                layoutId="tab-underline"
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: '10%',
-                  right: '10%',
-                  height: 3,
-                  backgroundColor: THEME.primary,
-                  borderRadius: 2,
-                }}
-                transition={{ type: 'spring', damping: 20 }}
+              <motion.span
+                layoutId="tab-pill"
+                className="tabs__pill"
+                transition={{ type: 'spring', damping: 22, stiffness: 300 }}
               />
             )}
-          </motion.button>
+            <span className="tabs__label">{labels[i]}</span>
+          </button>
         );
       })}
     </div>
